@@ -53,4 +53,3 @@ def getData(dataset):
 faces, ids = getData(path)
 model.train(faces, np.array(ids))
 model.save('./trainer.yml')
-
