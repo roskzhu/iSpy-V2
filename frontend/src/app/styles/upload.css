@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --regular-font-size: 15px;
+  --medium-font-size: 25px;
+  --regular-font-family: 'Helvetica', sans-serif;
+  --font-color: black;
+  --bg-color: white;
+  --accent-color: #CF9C18;
+  --accent-color-2: #736121;
+  --grey-color: #D9D9D9;
+  --grey-color-2: #606060;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --font-color: white;
+    --bg-color: black;
+    --accent-color: #736121;
+    --accent-color-2: #CF9C18;
+    --grey-color: #606060;
+    --grey-color-2: #D9D9D9;
+  }
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+.upload-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding-top: 50px;
+}
+
+.video-side {
+    background: var(--grey-color);
+    width: 70%;
+    height: 500px;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem;
+    position: relative;
+}
+
+.actual-video {
+    width: 97%;
+    height: 95%;
+    border-radius: 1rem;
+    background: black;
+}
+
+.playBtn {
+    position: absolute;
+    bottom: 0;
+    border-radius: 1rem;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--grey-color);
+    padding-left: 2px;
+    padding-top: 1px;
+    stroke: var(--font-color);
+}
+
+.playBtn svg path {
+    stroke: var(--font-color);
+}
+
+.image-side {
+    width: 20%;
+    height: 500px;
+    background: var(--grey-color);
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.image-side form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 85%;
+}
+
+.no-image {
+    height: 380px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.label {
+    color: var(--grey-color);
+    padding: 0.5rem;
+    background: white;
+    width: 100%;
+}
+
+.upload-image {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    background-color: var(--accent-color);
+    width: 100%;
+}

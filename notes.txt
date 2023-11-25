@@ -1,0 +1,113 @@
+For Later:
+frontend / backend connection
+https://medium.com/@jadomene99/integrating-your-opencv-project-into-a-react-component-using-flask-6bcf909c07f4
+
+Python Virtual Environment Commands using Anaconda:
+Creation:
+mkdir -p ~/miniconda3
+curl https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh -o ~/miniconda3/miniconda.sh
+bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+rm -rf ~/miniconda3/miniconda.sh
+~/miniconda3/bin/conda init bash
+~/miniconda3/bin/conda init zsh
+conda create --name env python=3.9
+Activate: conda activate env
+Deactivate: conda deactivate
+
+Installations (connect to venv first and execute in venv):
+The version of Python we are using is Python 3.9
+pip install numpy
+pip install opencv-python
+pip install opencv-contrib-python
+pip install flask
+pip install pyautogui
+
+Solving Git Conflicts:
+git fetch origin main
+git merge origin/main
+* resolve highlighted conflicts
+git add, commit, push
+
+Running the Program:
+python3 app.py
+Press the "ESC" key to exit
+
+How it Works:
+The first step we need to take in order to recognize an individual is to
+know when we are working with a face (facial detection). To do this we will be using
+a pre-trained frontal face HAAR Cascade Classifier supplied by OpenCV.
+Now to build on top of this base and not only recognize a face but an individual, we must gather our own dataset
+of the person to be identified. Using this dataset we will train our recognizer using the LBPH algorithm.
+
+Research:
+- The smallest element of an image is called a pixel
+- Each pixel is represented numerically through RGB or grayscale
+- In the grayscale model, each pixel holds a single value representing
+  the amount/intesity of light
+- Features of an image are derived from pixel patterns, such as edges,
+  corners and shapes. 
+- When we have a large collection of these features, we can
+  begin to identify things and solve tasks.
+- Dark regions will have a smaller pixel sum than lighter regions
+- There are 4 Haar-like features:
+  a) 2 vertical rectangles (edges)
+  b) 2 horizontal rectangles (edges)
+  c) A centered rectangle (lines)
+  d) Diagonal feature with 4 rectangles (diagonals)
+- Integral images are used to efficiently calculate the sum
+  of pixels in an area
+- Boosting is a machine learning algorithm where classifiers
+  that perform well are given greater consideration/importance or 
+  a higher weight. 
+
+Viola-Jones General Object Detection Framework:
+1. Select Haar-like features
+2. Create an intergral image
+3. Run AdaBoost Training
+4. Create classifier cascades
+
+Process:
+1) start at top left of picture and move in blocks
+2) run classifier tests on each block to identify
+3) to increase efficiency, we create cascades which
+   are stages of tests that increase with precision
+   (a block must pass all stages)
+ 
+Note: A cascade are a collection of XML files containing
+      opencv data. You initialize the code to the cascade
+      you want and it does all the detection work. It is
+      basically telling OpenCV what to look for in images.
+
+Clarifying the Difference between Haar Cascades and Convolutional Neural Nets:
+Haar cascades are mostly for the detection of eyes, face, body. Its more of machine learning concept and not very accurate.
+CNN or convolutional neural nets are newer and a deep learning approach which can take in an input image, 
+assign importance (learnable weights and biases) to various aspects/objects in the image, and be able to differentiate
+one from the other. CNN are more accurate and more tools have already been built to form them. (i.e. Teachable Machine)
+
+Local Binary Pattern (we can code this ourselves later, for now we use the OpenCV implementation):
+- LBPH an operator which labels the pixels of an image as a binary number based on neighbouring pixels
+- The operator is determined by two measures: local spatial patterns and grayscale contrast
+- Looks at 9 pixels at a time and turns it into a single value
+- Start by comparing the central pixel with the neighbouring pixels grayscale value
+- If the neighbouring pixel is greater than or equal to the central pixel assign 1 to the neighbouring pixel, else assign 0
+- Combine assigned values of the 8 neighbouring pixels together to generate a binary number in any ordering which corresponds to a decimal number for the central pixel, do this for every pixel but with consistent order
+- This is good because if the lighting is different, for example, while the values on the grayscale will differ, their relative differences will be the same 
+- We can also detect edges with this process. When we transition from a 0 to 1, there is an edge.
+- When we have enough decimal values we can combine this with a histogram to measure the frequency of each value
+- To start, we divide the resulting LBP image into grids (let's say we split it into an 8 x 8 grid) and create a histogram for each grid
+- The possible values for each pixel after LBP is still 0 to 255, so for each grid we will have 256 positions for the histogram
+- Then, we concatenate all the histograms for each grid to represent our image and process it for recognition (in our case, our histogram should have 8 x 8 x 256 positions in the final histogram)
+- To compare the 2 images, we compare their corresponding histograms using a simple euclidean distance calculation outlined below
+hist1 = [... LBP values ...]
+hist2 = [... LBP values ...]
+dist = 0
+for i in range(len(hist1)):
+  dist += pow(hist1[i] - hist2[i])
+dist = sqrt(dist)
+- The closest histogram wins and also the distance can be used as a "confidence measurement"
+- We can then define a threshold for which the confidence measurement must reach and if it is reached, we have successfully recognized a face
+
+
+
+
+
