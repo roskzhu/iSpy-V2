@@ -5,14 +5,17 @@ import psycopg2
 from psycopg2 import sql
 
 
-# Connect to the PostgreSQL database
-conn = psycopg2.connect(
-    dbname="your_database",
-    user="your_user",
-    password="your_password",
-    host="your_host",
-    port="your_port"
-)
+# Retrieve database connection parameters from environment variables
+db_params = {
+    "dbname": os.environ.get("DB_NAME"),
+    "user": os.environ.get("DB_USER"),
+    "password": os.environ.get("DB_PASSWORD"),
+    "host": os.environ.get("DB_HOST"),
+    "port": os.environ.get("DB_PORT", "5432"),  # Use a default value if not set
+}
+
+# Connect to the Google Cloud SQL database
+conn = psycopg2.connect(**db_params)
 cursor = conn.cursor()
 
 # Upload image to the correct location in the database
