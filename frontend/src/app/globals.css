@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --regular-font-size: 15px;
+  --medium-font-size: 25px;
+  --regular-font-family: 'Helvetica', sans-serif;
+  --font-color: black;
+  --bg-color: white;
+  --accent-color: #CF9C18;
+  --accent-color-2: #736121;
+  --grey-color: #D9D9D9;
+  --grey-color-2: #606060;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --font-color: white;
+    --bg-color: black;
+    --accent-color: #736121;
+    --accent-color-2: #CF9C18;
+    --grey-color: #606060;
+    --grey-color-2: #D9D9D9;
+  }
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-size: var(--regular-font-size);
+  font-family: var(--regular-font-family);
+  color: var(--font-color);
+  background: var(--bg-color);
+}
+
+svg path {
+  fill: var(--font-color);
+}
+
+.logo svg {
+  width: 35px;
+  height: 35px;
+}
+
+.modeBtn svg {
+  width: 35px;
+  height: 35px;
+}
+
+.modeBtn svg path {
+  fill: var(--accent-color);
+  stroke: var(--accent-color-2);
+}
+
+.navBar {
+  width: 100vw;
+  height: 75px;
+  padding: 0 3rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  box-shadow: var(--grey-color) 0px 1px 15px;
+  background: var(--bg-color);
+  z-index: 1;
+}
+
+.right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 5rem;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 5rem;
+  margin-bottom: 3rem;
+}
+
+.line {
+  width: 90vw;
+  height: 1px;
+  background: var(--font-color);
+}

@@ -1,0 +1,149 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --regular-font-size: 15px;
+  --medium-font-size: 25px;
+  --regular-font-family: 'Helvetica', sans-serif;
+  --font-color: black;
+  --bg-color: white;
+  --accent-color: #CF9C18;
+  --accent-color-2: #736121;
+  --grey-color: #D9D9D9;
+  --grey-color-2: #606060;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --font-color: white;
+    --bg-color: black;
+    --accent-color: #736121;
+    --accent-color-2: #CF9C18;
+    --grey-color: #606060;
+    --grey-color-2: #D9D9D9;
+  }
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+.landing-page {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 700px;
+    align-items: center;
+    justify-content: center;
+    gap: 7rem;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+}
+
+.landing-left {
+    display: flex;
+    flex-direction: column;
+    width: 35vw;
+    align-items: left;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.ispy {
+    font-size: 145px;
+    line-height: 165px;
+    font-weight: bolder;
+    background: linear-gradient(100deg, var(--accent-color), white);
+    background-clip: text;
+    color: transparent;
+}
+
+.slogan {
+    font-size: var(--medium-font-size);
+}
+
+button {
+    padding: 0.75rem;
+    border-radius: 7px;
+    background: var(--accent-color);
+    font-size: 1rem;
+}
+
+.landing-right {
+    margin-top: 1rem;
+}
+
+.information-section {
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    align-items: top;
+    justify-content: center;
+    gap: 7rem;
+    margin-top: 5rem;
+}
+
+.about {
+    width: 42%;
+    height: 575px;
+    padding: 3.5rem;
+    background: var(--grey-color);
+    border-radius: 7px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.title {
+    font-size: 50px;
+    line-height: 50px;
+    font-weight: bolder;
+}
+
+.integration {
+    width: 35%;
+    height: 575px;
+    display: flex;
+    flex-direction: column;
+    align-items: top;
+    justify-content: center;
+}
+
+.subheader {
+    font-size: var(--medium-font-size);
+    font-weight: bolder;
+}
+
+.motto {
+    color: var(--grey-color-2);
+}
+
+.product-demo {
+    margin-top: 1rem;
+    color: var(--accent-color-2);
+    font-weight: bolder;
+}
+
+.p1 {
+    margin-top: 0.5rem;
+}
+
+.learn-more {
+    margin-top: 1rem;
+}
+
+video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
