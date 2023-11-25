@@ -1,8 +1,21 @@
 import os
 import cv2
 import json
+import psycopg2
+from psycopg2 import sql
 
-# upload image to correct location in database
+
+# Connect to the PostgreSQL database
+conn = psycopg2.connect(
+    dbname="your_database",
+    user="your_user",
+    password="your_password",
+    host="your_host",
+    port="your_port"
+)
+cursor = conn.cursor()
+
+# Upload image to the correct location in the database
 def upload(name, image, num):
     """
         :type name: str
@@ -10,53 +23,50 @@ def upload(name, image, num):
               num: int
         :rtype: N/A
     """
-    file_path = "db/imgs/" + name
-    if not os.path.exists(file_path):
-        os.makedirs(file_path)
-    file_name = name + "-" + str(num) + ".jpg"
-    destination = file_path + "/" + file_name
-    cv2.imwrite(destination, image)
+    # Convert NumPy array to bytea for storage
+    image_data = psycopg2.Binary(cv2.imencode('.jpg', image)[1].tobytes())
+
+    # Insert image data into the database
+    cursor.execute(
+        "INSERT INTO images (name, num, image_data) VALUES (%s, %s, %s)",
+        (name, num, image_data)
+    )
+
+    conn.commit()
     return
 
-# adds index to specified label in labels.json
+# Adds index to specified label in labels table
 def add_label(index, label):
     """
         :type index: int
               label: str
         :rtype: N/A
     """
-    if index == 0:
-        labels_json = {}
-        labels_json[label] = [index]
-    else:
-        with open("db/labels.json", "r") as f:
-            labels_json = json.load(f)
-        if label in labels_json.keys():
-            labels_json[label].append(index)
-        else:
-            labels_json[label] = [index]
-    with open("db/labels.json", "w") as f:
-        json.dump(labels_json, f, indent=4)
+    # Insert or update label information in the database
+    cursor.execute(
+        "INSERT INTO labels (index, label) VALUES (%s, %s) ON CONFLICT (label) DO UPDATE SET index = EXCLUDED.index",
+        (index, label)
+    )
+
+    conn.commit()
     return
 
-# adds a new person to people.json
+# Adds a new person to people table
 def add_person(index, name):
     """
         :type index: int
               name: str
         :rtype: N/A
     """
-    if index == 0:
-        people_json = {}
-        people_json["num_people"] = 1
-        people_json["people"] = {}
-        people_json["people"][name] = 0
-    else:
-        with open("db/people.json", "r") as f:
-            people_json = json.load(f)
-        people_json["num_people"] = people_json["num_people"] + 1
-        people_json["people"][name] = index
-    with open("db/people.json", "w") as f:
-        json.dump(people_json, f, indent=4)
+    # Insert or update person information in the database
+    cursor.execute(
+        "INSERT INTO people (index, name) VALUES (%s, %s) ON CONFLICT (name) DO UPDATE SET index = EXCLUDED.index",
+        (index, name)
+    )
+
+    conn.commit()
     return
 
+# Close the database connection when the script is done
+cursor.close()
+conn.close()

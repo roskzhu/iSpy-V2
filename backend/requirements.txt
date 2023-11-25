@@ -1,0 +1,5 @@
+numpy==1.21.0
+opencv-python==4.5.3.56
+opencv-contrib-python==4.5.3.56
+flask==2.0.1
+psycopg2-binary==2.9.1
